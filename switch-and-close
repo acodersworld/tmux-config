@@ -1,0 +1,9 @@
+set -e
+
+TARGET=$(tmux list-sessions -F "#S" | grep -v "^$(tmux display-message -p '#S')\$" | fzf --header "Switch and close" --preview "tmux capture-pane -pt {}")
+
+if [ -n "$TARGET" ]; then
+	CURRENT=$(tmux display-message -p '#S')
+	tmux switch-client -t $TARGEET
+	tmux kill-session -t $CURRENT
+fi
